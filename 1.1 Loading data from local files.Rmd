@@ -2,7 +2,7 @@
 
 setwd('G:/DATA/--/Projects')
 
-# read an excel file in folder
+# Read an excel file in folder
 library(readxl)
 
 df = read_excel('IMF.Econ.Stats.cleaned.xlsx', sheet = 'economic_data', skip = 0)
@@ -16,7 +16,7 @@ length(unique(dfsub.rating$country))
 # Count obs for each variables in < description >
 obs = count(dfsub.rating, c('description'))
 
-# drop variables in < description > is obs is less than 10
+# Drop variables in < description > is obs is less than 10
 dfsub.obs = subset(obs, freq >= 10)
 write.csv(dfsub.obs, file = 'unique value of category.csv') # open and manually pick variables, then save the files as .xlsx
 
