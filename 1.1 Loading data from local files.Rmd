@@ -6,3 +6,32 @@ setwd('G:/DATA/--/Projects')
 library(readxl)
 
 df = read_excel('IMF.Econ.Stats.cleaned.xlsx', sheet = 'economic_data', skip = 0)
+
+length(unique(df$country)) # how many countries in this sample
+
+# Subsetting, keep ratings higher or equal B+
+dfsub.rating = subset(df, AvgScore >= 8)
+length(unique(dfsub.rating$country)) 
+
+# Count obs for each variables in < description >
+obs = count(dfsub.rating, c('description'))
+
+# drop variables in < description > is obs is less than 10
+dfsub.obs = subset(obs, freq >= 10)
+write.csv(dfsub.obs, file = 'unique value of category.csv') # open and manually pick variables, then save the files as .xlsx
+
+##
+# Loading selected variable list
+df1 = read_excel('unique value of category.xlsx', sheet = 1, skip = 0)
+dfsub.df1 = subset(df1, Selected == 1)
+
+preferredcat = dfsub.df1$description
+
+# Subsetting, keep if the variable is selected  
+dfsub.selected = subset(dfsub.rating, description %in% preferredcat)
+
+write.csv(dfsub.selected, 'Cleaned IIF Data.csv')
+
+### key functions
+# subset
+# count
